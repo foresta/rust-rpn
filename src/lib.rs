@@ -6,6 +6,17 @@ enum Operator {
     Div,
 }
 
+impl Operator {
+    fn exec(&self, x: f64, y: f64) -> f64 {
+        match self {
+            Operator::Add => x + y,
+            Operator::Sub => x - y,
+            Operator::Mul => x * y,
+            Operator::Div => x / y,
+        }
+    }
+}
+
 #[derive(Debug, Clone, PartialEq)]
 enum Token {
     Operator(Operator),
@@ -37,7 +48,10 @@ enum Ast {
 
 impl Ast {
     fn evaluate(&self) -> f64 {
-        return 1.0;
+        match self {
+            Ast::Num(n) => *n,
+            Ast::Op { op, lhs, rhs } => op.exec(lhs.evaluate(), rhs.evaluate()),
+        }
     }
 }
 
@@ -214,5 +228,19 @@ fn test_parse() {
             }),
             rhs: Box::new(Ast::Num(3.0))
         }
+    );
+}
+
+#[test]
+fn test_evaluate() {
+    assert_eq!(Ast::Num(4.0).evaluate(), 4.0);
+    assert_eq!(
+        Ast::Op {
+            op: Operator::Add,
+            lhs: Box::new(Ast::Num(1.0)),
+            rhs: Box::new(Ast::Num(2.0)),
+        }
+        .evaluate(),
+        3.0
     );
 }
