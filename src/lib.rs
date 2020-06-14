@@ -3,6 +3,24 @@ mod operator;
 mod parser;
 mod tokenizer;
 
+/// Calculates single-digit Reverse Polish Notation
+///
+/// # Examples
+/// ```
+/// extern crate single_digit_rpn;
+/// use single_digit_rpn::rpn;
+///
+/// let result = rpn("123++").unwrap();
+/// assert_eq!(result, 6.0);
+/// ```
+/// # Errors
+///
+/// This funtion raises an error
+///
+/// - if it includes an invalid character (recognized number, +, -, *, and /)
+/// - if there are too many operands
+/// - if there are too few operators
+///
 pub fn rpn(expr: &str) -> Result<f64, String> {
     return match tokenizer::tokenize(expr) {
         Ok(tokens) => match parser::parse(tokens) {

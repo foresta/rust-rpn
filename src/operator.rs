@@ -7,6 +7,7 @@ pub enum Operator {
 }
 
 impl Operator {
+    /// Arithmetically executes the operator
     pub fn exec(&self, x: f64, y: f64) -> f64 {
         match self {
             Operator::Add => x + y,

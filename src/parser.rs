@@ -8,6 +8,7 @@ pub enum ParseError {
 }
 
 impl ParseError {
+    /// Parse error message for display.
     pub fn message(&self) -> String {
         return match self {
             ParseError::MissingOperand => {
@@ -21,6 +22,7 @@ impl ParseError {
     }
 }
 
+/// Parses a Token sequence nto an AST
 pub fn parse(tokens: Vec<Token>) -> Result<Ast, ParseError> {
     let mut stack: Vec<Ast> = Vec::new();
     for token in tokens {

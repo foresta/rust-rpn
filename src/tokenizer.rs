@@ -19,6 +19,7 @@ impl TokenError {
     }
 }
 
+/// Converts a RPN expression string into a Token
 pub fn tokenize(expr: &str) -> Result<Vec<Token>, TokenError> {
     expr.chars()
         .filter(|c| !c.is_whitespace())

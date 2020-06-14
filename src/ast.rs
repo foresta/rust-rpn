@@ -11,6 +11,7 @@ pub enum Ast {
 }
 
 impl Ast {
+    /// Evaluate RPN Ast
     pub fn evaluate(&self) -> f64 {
         match self {
             Ast::Num(n) => *n,
