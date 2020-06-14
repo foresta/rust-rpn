@@ -23,6 +23,7 @@ fn main() {
     loop {
         prompt("> ").unwrap();
         if let Some(Ok(line)) = lines.next() {
+            // Calculate RPN from inpute string.
             match rpn(line.as_str()) {
                 Ok(n) => println!("{}", n),
                 Err(err) => println!("{}", err),
