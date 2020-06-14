@@ -1,4 +1,4 @@
-# Single digit Reeverse Polish Notation 
+# Single digit Reverse Polish Notation 
 
 This package is a single digit RPN calculator.
 Only single digit RPN is supported:

@@ -3,7 +3,14 @@ name = "single-digit-rpn"
 version = "0.1.0"
 authors = ["kz_morita <kz.morit@gmail.com>"]
 edition = "2018"
+license = "MIT"
+description = "Calculate single digit Reverse Polish Notation"
+readme = "README.md"
+repository = "https://github.com/foresta/single-digit-rpn"
+categories = ["parser-implementations"]
+keywords = ["rpn", "parser", "Reverse Polish Notation", "single digit"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[badges]
+travis-ci = { repository = "foresta/single-digit-rpn" }
 
 [dependencies]
