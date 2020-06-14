@@ -8,7 +8,7 @@ description = "Calculate single digit Reverse Polish Notation"
 readme = "README.md"
 repository = "https://github.com/foresta/single-digit-rpn"
 categories = ["parser-implementations"]
-keywords = ["rpn", "parser", "Reverse Polish Notation", "single digit"]
+keywords = ["rpn", "parser", "single-digit"]
 
 [badges]
 travis-ci = { repository = "foresta/single-digit-rpn" }
