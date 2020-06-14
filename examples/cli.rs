@@ -1,3 +1,5 @@
+extern crate single_digit_rpn;
+
 use single_digit_rpn::rpn;
 use std::io;
 
