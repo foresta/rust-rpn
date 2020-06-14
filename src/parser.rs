@@ -48,67 +48,74 @@ pub fn parse(tokens: Vec<Token>) -> Result<Ast, ParseError> {
     return Ok(stack.pop().unwrap());
 }
 
-#[test]
-fn test_parse() {
-    use crate::operator::Operator;
+#[cfg(test)]
+mod tests {
+    use crate::ast::Ast;
+    use crate::parser::{parse, ParseError};
+    use crate::tokenizer::Token;
 
-    assert_eq!(
-        parse(vec![Token::Operand(1.0)]).ok().unwrap(),
-        Ast::Num(1.0)
-    );
-    assert_eq!(
-        parse(vec![
-            Token::Operand(1.0),
-            Token::Operand(2.0),
-            Token::Operator(Operator::Add)
-        ])
-        .ok()
-        .unwrap(),
-        Ast::Op {
-            op: Operator::Add,
-            lhs: Box::new(Ast::Num(1.0)),
-            rhs: Box::new(Ast::Num(2.0))
-        }
-    );
-    assert_eq!(
-        parse(vec![Token::Operand(1.0), Token::Operand(2.0)])
-            .err()
+    #[test]
+    fn test_parse() {
+        use crate::operator::Operator;
+
+        assert_eq!(
+            parse(vec![Token::Operand(1.0)]).ok().unwrap(),
+            Ast::Num(1.0)
+        );
+        assert_eq!(
+            parse(vec![
+                Token::Operand(1.0),
+                Token::Operand(2.0),
+                Token::Operator(Operator::Add)
+            ])
+            .ok()
             .unwrap(),
-        ParseError::RemainingOperand
-    );
-    assert_eq!(
-        parse(vec![Token::Operand(1.0), Token::Operator(Operator::Add)])
-            .err()
-            .unwrap(),
-        ParseError::MissingOperand
-    );
-    assert_eq!(
-        parse(vec![
-            Token::Operand(1.0),
-            Token::Operand(2.0),
-            Token::Operator(Operator::Add),
-            Token::Operand(3.0),
-            Token::Operator(Operator::Mul)
-        ])
-        .ok()
-        .unwrap(),
-        Ast::Op {
-            op: Operator::Mul,
-            lhs: Box::new(Ast::Op {
+            Ast::Op {
                 op: Operator::Add,
                 lhs: Box::new(Ast::Num(1.0)),
                 rhs: Box::new(Ast::Num(2.0))
-            }),
-            rhs: Box::new(Ast::Num(3.0))
-        }
-    );
+            }
+        );
+        assert_eq!(
+            parse(vec![Token::Operand(1.0), Token::Operand(2.0)])
+                .err()
+                .unwrap(),
+            ParseError::RemainingOperand
+        );
+        assert_eq!(
+            parse(vec![Token::Operand(1.0), Token::Operator(Operator::Add)])
+                .err()
+                .unwrap(),
+            ParseError::MissingOperand
+        );
+        assert_eq!(
+            parse(vec![
+                Token::Operand(1.0),
+                Token::Operand(2.0),
+                Token::Operator(Operator::Add),
+                Token::Operand(3.0),
+                Token::Operator(Operator::Mul)
+            ])
+            .ok()
+            .unwrap(),
+            Ast::Op {
+                op: Operator::Mul,
+                lhs: Box::new(Ast::Op {
+                    op: Operator::Add,
+                    lhs: Box::new(Ast::Num(1.0)),
+                    rhs: Box::new(Ast::Num(2.0))
+                }),
+                rhs: Box::new(Ast::Num(3.0))
+            }
+        );
 
-    assert_eq!(
-        parse(vec![Token::Operand(1.0), Token::Operator(Operator::Add)]),
-        Err(ParseError::MissingOperand)
-    );
-    assert_eq!(
-        parse(vec![Token::Operand(1.0), Token::Operand(2.0)]),
-        Err(ParseError::RemainingOperand)
-    );
+        assert_eq!(
+            parse(vec![Token::Operand(1.0), Token::Operator(Operator::Add)]),
+            Err(ParseError::MissingOperand)
+        );
+        assert_eq!(
+            parse(vec![Token::Operand(1.0), Token::Operand(2.0)]),
+            Err(ParseError::RemainingOperand)
+        );
+    }
 }

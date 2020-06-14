@@ -19,16 +19,22 @@ impl Ast {
     }
 }
 
-#[test]
-fn test_evaluate() {
-    assert_eq!(Ast::Num(4.0).evaluate(), 4.0);
-    assert_eq!(
-        Ast::Op {
-            op: Operator::Add,
-            lhs: Box::new(Ast::Num(1.0)),
-            rhs: Box::new(Ast::Num(2.0)),
-        }
-        .evaluate(),
-        3.0
-    );
+#[cfg(test)]
+mod tests {
+    use super::Ast;
+    use crate::operator::Operator;
+
+    #[test]
+    fn test_evaluate() {
+        assert_eq!(Ast::Num(4.0).evaluate(), 4.0);
+        assert_eq!(
+            Ast::Op {
+                op: Operator::Add,
+                lhs: Box::new(Ast::Num(1.0)),
+                rhs: Box::new(Ast::Num(2.0)),
+            }
+            .evaluate(),
+            3.0
+        );
+    }
 }

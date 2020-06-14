@@ -16,3 +16,17 @@ impl Operator {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::operator::Operator;
+
+    #[test]
+    fn test_exec() {
+        assert_eq!(Operator::Add.exec(1.0, 2.0), 3.0);
+        assert_eq!(Operator::Sub.exec(5.0, 2.0), 3.0);
+        assert_eq!(Operator::Sub.exec(1.0, 2.0), -1.0);
+        assert_eq!(Operator::Mul.exec(4.0, 2.0), 8.0);
+        assert_eq!(Operator::Div.exec(8.0, 2.0), 4.0);
+    }
+}

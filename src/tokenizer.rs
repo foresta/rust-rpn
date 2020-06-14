@@ -36,50 +36,56 @@ pub fn tokenize(expr: &str) -> Result<Vec<Token>, TokenError> {
         .collect()
 }
 
-#[test]
-fn test_tokenize() {
-    // Check tokenize operand
-    assert_eq!(tokenize("1"), Ok(vec![Token::Operand(1.0)]));
-    assert_eq!(tokenize("2"), Ok(vec![Token::Operand(2.0)]));
-    assert_eq!(tokenize("3"), Ok(vec![Token::Operand(3.0)]));
-    assert_eq!(tokenize("4"), Ok(vec![Token::Operand(4.0)]));
-    assert_eq!(tokenize("5"), Ok(vec![Token::Operand(5.0)]));
-    assert_eq!(tokenize("6"), Ok(vec![Token::Operand(6.0)]));
-    assert_eq!(tokenize("7"), Ok(vec![Token::Operand(7.0)]));
-    assert_eq!(tokenize("8"), Ok(vec![Token::Operand(8.0)]));
-    assert_eq!(tokenize("9"), Ok(vec![Token::Operand(9.0)]));
-    assert_eq!(tokenize("0"), Ok(vec![Token::Operand(0.0)]));
+#[cfg(test)]
+mod tests {
+    use crate::operator::Operator;
+    use crate::tokenizer::{tokenize, Token, TokenError};
 
-    // Check tokenize operand
-    assert_eq!(tokenize("+"), Ok(vec![Token::Operator(Operator::Add)]));
-    assert_eq!(tokenize("-"), Ok(vec![Token::Operator(Operator::Sub)]));
-    assert_eq!(tokenize("*"), Ok(vec![Token::Operator(Operator::Mul)]));
-    assert_eq!(tokenize("/"), Ok(vec![Token::Operator(Operator::Div)]));
+    #[test]
+    fn test_tokenize() {
+        // Check tokenize operand
+        assert_eq!(tokenize("1"), Ok(vec![Token::Operand(1.0)]));
+        assert_eq!(tokenize("2"), Ok(vec![Token::Operand(2.0)]));
+        assert_eq!(tokenize("3"), Ok(vec![Token::Operand(3.0)]));
+        assert_eq!(tokenize("4"), Ok(vec![Token::Operand(4.0)]));
+        assert_eq!(tokenize("5"), Ok(vec![Token::Operand(5.0)]));
+        assert_eq!(tokenize("6"), Ok(vec![Token::Operand(6.0)]));
+        assert_eq!(tokenize("7"), Ok(vec![Token::Operand(7.0)]));
+        assert_eq!(tokenize("8"), Ok(vec![Token::Operand(8.0)]));
+        assert_eq!(tokenize("9"), Ok(vec![Token::Operand(9.0)]));
+        assert_eq!(tokenize("0"), Ok(vec![Token::Operand(0.0)]));
 
-    // Check tokenize invalid char
-    assert_eq!(tokenize("a"), Err(TokenError::InvalidChar('a')));
+        // Check tokenize operand
+        assert_eq!(tokenize("+"), Ok(vec![Token::Operator(Operator::Add)]));
+        assert_eq!(tokenize("-"), Ok(vec![Token::Operator(Operator::Sub)]));
+        assert_eq!(tokenize("*"), Ok(vec![Token::Operator(Operator::Mul)]));
+        assert_eq!(tokenize("/"), Ok(vec![Token::Operator(Operator::Div)]));
 
-    // Check whitespace
-    assert_eq!(tokenize(" "), Ok(vec![]));
-    assert_eq!(tokenize(" 1"), Ok(vec![Token::Operand(1.0)]));
-    assert_eq!(tokenize("1 "), Ok(vec![Token::Operand(1.0)]));
-    assert_eq!(
-        tokenize("1 1"),
-        Ok(vec![Token::Operand(1.0), Token::Operand(1.0)])
-    );
+        // Check tokenize invalid char
+        assert_eq!(tokenize("a"), Err(TokenError::InvalidChar('a')));
 
-    // Check tokenize tokens
-    assert_eq!(
-        tokenize("123+- 45 *"),
-        Ok(vec![
-            Token::Operand(1.0),
-            Token::Operand(2.0),
-            Token::Operand(3.0),
-            Token::Operator(Operator::Add),
-            Token::Operator(Operator::Sub),
-            Token::Operand(4.0),
-            Token::Operand(5.0),
-            Token::Operator(Operator::Mul)
-        ])
-    );
+        // Check whitespace
+        assert_eq!(tokenize(" "), Ok(vec![]));
+        assert_eq!(tokenize(" 1"), Ok(vec![Token::Operand(1.0)]));
+        assert_eq!(tokenize("1 "), Ok(vec![Token::Operand(1.0)]));
+        assert_eq!(
+            tokenize("1 1"),
+            Ok(vec![Token::Operand(1.0), Token::Operand(1.0)])
+        );
+
+        // Check tokenize tokens
+        assert_eq!(
+            tokenize("123+- 45 *"),
+            Ok(vec![
+                Token::Operand(1.0),
+                Token::Operand(2.0),
+                Token::Operand(3.0),
+                Token::Operator(Operator::Add),
+                Token::Operator(Operator::Sub),
+                Token::Operand(4.0),
+                Token::Operand(5.0),
+                Token::Operator(Operator::Mul)
+            ])
+        );
+    }
 }
