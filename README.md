@@ -1,5 +1,7 @@
 # Single digit Reverse Polish Notation 
 
+[![Build Status](https://travis-ci.org/foresta/single-digit-rpn.svg?branch=master)](https://travis-ci.org/foresta/single-digit-rpn)
+
 This package is a single digit RPN calculator.
 Only single digit RPN is supported:
 
